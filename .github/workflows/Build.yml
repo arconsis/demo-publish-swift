@@ -18,7 +18,6 @@ jobs:
         with: 
           path: .build
           key: ${{ runner.os }}-swift
-        post-if: always()
       
       - name: Resolve Swift Deendencies
         run: swift package resolve
