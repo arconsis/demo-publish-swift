@@ -34,7 +34,17 @@ jobs:
           [ -d ./Resources ] && { mv ./Resources ./staging/Resources && chmod -R a-w ./staging/Resources; } || true
           echo "```$(ls -la)```" >> $GITHUB_STEP_SUMMARY
 
-
+      - name: Login to Github Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Build docker-image and push to registry
+        run: |
+          docker build --tag ghcr.io/arconsis/demo-publish-swift:latest .
+          docker push ghcr.io/arconsis/demo-publish-swift:latest
        
 
       
